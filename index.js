@@ -4,6 +4,7 @@ const myH1 = document.querySelector('#myH1')
 const myInput = document.querySelector('input')
 const imgDiv = document.querySelector('#imgDiv')
 
+// fetch function
 const fetchData = val => {
   fetch(`https://api.imgflip.com/get_memes`)
     .then(res => res.json())
@@ -18,12 +19,18 @@ const fetchData = val => {
     })
     .catch(err => console.log(err))
 }
-
-btn.addEventListener('click', () => {
+// event sequences function
+const eventHandler = () => {
   imgDiv.classList.replace('block', 'hidden')
   !myInput.value || isNaN(myInput.value)
     ? (myH1.innerHTML = 'please enter valid number ')
     : 99 < myInput.value || myInput.value < 0
     ? (myH1.innerHTML = 'please enter number from 0 to 99')
     : fetchData(myInput.value)
+}
+
+// btn & input event listeners
+btn.addEventListener('click', () => eventHandler())
+myInput.addEventListener('keydown', e => {
+  e.key === 'Enter' && eventHandler()
 })
